@@ -1,10 +1,6 @@
 require 'open3'
 module SGE
   class CommandRunner
-    STDIN  = 0
-    STDOUT = 1
-    STDERR = 2
-    THREAD = 3
 
     SUCCESS_CODE = 0
     ERROR_CODE = 1
@@ -25,9 +21,10 @@ module SGE
       reset!
       Open3.popen3(cmd) do |_, stdout, stderr, w_thread|
         @executed = true
-        @exit_status = w_thread.value rescue SUCCESS_CODE
-        @output = stdout.read
-        @errput = stderr.read
+        # Oh we assume that prior to Ruby 1.9, exit code is always success
+        @exit_status = w_thread.value.exitstatus rescue SUCCESS_CODE
+        @output = stdout.read.strip
+        @errput = stderr.read.strip
       end
     end
 
