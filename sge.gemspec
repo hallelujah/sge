@@ -17,6 +17,12 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  if RUBY_VERSION >= '1.8.6'
+    s.add_runtime_dependency "nokogiri"
+  else
+    s.add_runtime_dependency "nokogiri", "< 1.5.0"
+  end
   s.add_development_dependency "rspec"
   s.add_development_dependency "rake"
 
