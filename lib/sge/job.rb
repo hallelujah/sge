@@ -10,21 +10,22 @@ module SGE
       :slots => :slots,
       :state => :state
     }
-    
+
     ATTRIBUTES_PATH = ATTRIBUTES.keys.join('|')
-    
+
     attr_accessor *ATTRIBUTES.values
-    
+    ATTRIBUTES.each do |k,v|
+      alias_method k, v
+      alias_method "#{k}=", "#{v}="
+    end
+
     def self.from_document(doc)
       instance = new
       doc.xpath('.//' + ATTRIBUTES_PATH ).each do |node|
-        instance.set(ATTRIBUTES[node.name.to_sym], node.text)
+        instance.send("#{node.name}=", node.text)
       end
       instance
     end
-    
-    def set(k,v)
-      instance_variable_set("@#{k.to_s}", v)
-    end
+
   end
 end
