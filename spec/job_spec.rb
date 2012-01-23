@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe SGE::Job do
-  it {SGE::Job.should be_const_defined(:ATTRIBUTES) }
+  it "should respond_to define_attributes" do
+    SGE::Job.should respond_to(:define_attributes)
+  end
+
   it { should respond_to(:job_number) }
   it { should respond_to(:priority) }
   it { should respond_to(:name) }
@@ -19,7 +22,7 @@ describe SGE::Job do
   it { should respond_to(:slots=) }
   it { should respond_to(:state=) }
   it { should respond_to(:owner=) }
-  
+
   it "should retrieve data from XML document" do
     string = %Q{
     <job_list state="running">
@@ -44,7 +47,7 @@ describe SGE::Job do
     @job.queue_name.should == 'calcul-x@wousdat-dev.in.weborama.fr'
     @job.slots.should == '1'
   end
-  
+
 end
 
 

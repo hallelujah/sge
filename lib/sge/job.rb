@@ -1,6 +1,7 @@
 module SGE
   class Job
-    ATTRIBUTES = {
+    include SGE::JobHelpers
+    define_attributes(
       :JB_job_number => :job_number,
       :JAT_prio => :priority,
       :JB_name => :name,
@@ -8,24 +9,10 @@ module SGE
       :JAT_start_time => :start_time,
       :queue_name => :queue_name,
       :slots => :slots,
-      :state => :state
-    }
-
-    ATTRIBUTES_PATH = ATTRIBUTES.keys.join('|')
-
-    attr_accessor *ATTRIBUTES.values
-    ATTRIBUTES.each do |k,v|
-      alias_method k, v
-      alias_method "#{k}=", "#{v}="
-    end
-
-    def self.from_document(doc)
-      instance = new
-      doc.xpath('.//' + ATTRIBUTES_PATH ).each do |node|
-        instance.send("#{node.name}=", node.text)
-      end
-      instance
-    end
+      :state => :state,
+      :cpu => :cpu,
+      :JB_submission_time => :submission_time
+    )
 
   end
 end
