@@ -7,6 +7,7 @@ describe SGE::QStat::Job do
   end
 
   it { should respond_to(:job_number)}
+  it { should respond_to(:owner)}
   it { should respond_to(:start_time)}
   it { should respond_to(:queue_name)}
   it { should respond_to(:submission_time)}
@@ -31,6 +32,7 @@ describe SGE::QStat::Job do
     @job.job_number.should == '2337'
     @job.name.should == 's20100220_11;init_jour'
     @job.state.should == 'r'
+    @job.owner.should == 'prodsoft'
     @job.start_time.should == '2010-02-24T21:55:13'
     @job.queue_name.should == 'calcul-x@wousdat-dev.in.weborama.fr'
   end
