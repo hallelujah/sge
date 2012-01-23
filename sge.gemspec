@@ -5,8 +5,8 @@ require "sge/version"
 Gem::Specification.new do |s|
   s.name        = "sge"
   s.version     = SGE::VERSION
-  s.authors     = ["Ramihajamalala Hery"]
-  s.email       = ["hery@weborama.com"]
+  s.authors     = ["Hallelujah"]
+  s.email       = ["hery@rails-royce.org"]
   s.homepage    = ""
   s.summary     = %q{Sun Grid Engine ruby library}
   s.description = %q{Sun Grid Engine ruby library}
