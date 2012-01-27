@@ -4,6 +4,7 @@ module SGE
     class Transformer
 
       def load_from_yaml_file(yaml_file, remove_file = false,&block)
+        raise "A block must be given" unless block_given?
         File.open(yaml_file,"r+") do |file|
           YAML.load_documents(file,&block)
         end

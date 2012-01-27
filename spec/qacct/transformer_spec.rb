@@ -23,4 +23,23 @@ describe SGE::QAcct::Transformer do
       subject.command(:cmd => "echo 'Hello World!'", :file => "hello.world").should == "echo 'Hello World!' | #{sh_file} > hello.world"
     end
   end
+
+  context "#load_from_yaml_file" do
+    let(:file){ File.expand_path('../../data/qacct.yml',__FILE__)}
+
+    it "should accept a block" do
+      lambda{ subject.load_from_yaml_file(file, false) }.should raise_error
+    end
+
+    it "should reads docs" do
+      documents = []
+      documents.should be_empty
+      subject.load_from_yaml_file(file, false) do |doc|
+        documents << doc
+      end
+      documents.should_not be_empty
+      documents.should be_all {|d| SGE::QAcct::Job === d }
+    end
+
+  end
 end
