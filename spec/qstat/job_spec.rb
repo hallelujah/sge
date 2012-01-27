@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SGE::QStat::Job do
 
   it "should respond_to define_attributes" do
-    SGE::Job.should respond_to(:define_attributes)
+    SGE::QStat::Job.should respond_to(:define_attributes)
   end
 
   it { should respond_to(:job_number)}
