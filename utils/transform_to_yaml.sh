@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sed -e 's/ \+/ /g' -e 's/\s\+$//g' -e 's/^\([^ ]\+\)\s\+\(.\+\)$/\1: "\2"/g'  -e 's/===*/--- !ruby\/object:SGE::QAcct::Job/g'
+sed -e 's/ \{1,\}$//g' -e  's/ \{1,\}/ /g' -e 's/^\([^ ]\{1,\}\) \{1,\}\(.\{1,\}\)$/\1: "\2"/g'  -e 's/===*/--- !ruby\/object:SGE::QAcct::Job/g'
