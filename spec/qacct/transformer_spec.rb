@@ -16,11 +16,13 @@ describe SGE::QAcct::Transformer do
   context "#command" do
     it "should accept :file options" do
       lambda{ subject.command}.should raise_error("We need a file to dump the yaml")
-      subject.command(:file => "hello.world").should == "echo | #{sh_file} > hello.world"
+      subject.command(:file => "hello.world").should == "echo | #{sh_file} > hello.world &"
+      subject.command(:file => "hello.world", :blocking => true).should == "echo | #{sh_file} > hello.world"
     end
 
     it "should accept :cmd options" do
-      subject.command(:cmd => "echo 'Hello World!'", :file => "hello.world").should == "echo 'Hello World!' | #{sh_file} > hello.world"
+      subject.command(:cmd => "echo 'Hello World!'", :file => "hello.world").should == "echo 'Hello World!' | #{sh_file} > hello.world &"
+      subject.command(:cmd => "echo 'Hello World!'", :file => "hello.world", :blocking => true).should == "echo 'Hello World!' | #{sh_file} > hello.world"
     end
   end
 

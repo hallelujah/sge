@@ -1,6 +1,41 @@
 require 'spec_helper'
 
 describe SGE::QAcct::Job do
+  let(:klass){ SGE::QAcct::Job }
+  context "Class Methods" do
+    subject{klass}
+
+    it { should respond_to(:command) }
+    it { should respond_to(:load_documents) }
+
+    it "should accept a command" do
+      klass.command(:cmd => "ls -l").should == "ls -l"
+    end
+
+    context "loading documents" do
+      let(:file){ File.expand_path('../../data/qacct.sge',__FILE__)}
+
+      it "should load documents" do
+        docs = klass.load_documents(:cmd  => "cat #{file}", :remove_tmp_file => true)
+        docs.should_not be_empty
+      end
+      
+      it "should receive a block" do
+        doc = nil
+        klass.load_documents(:cmd  => "cat #{file}", :remove_tmp_file => true) do |d|
+          doc = d 
+          break
+        end
+        doc.should be_an_instance_of(klass)
+      end
+    end
+
+    it "should execute" do
+      Kernel.should_receive("system").once.with("ls").and_return "A list of files"
+      klass.execute('ls').should == "A list of files"
+    end
+  end
+
   context "FIELDS" do
     it "should define constant FIELD" do
       SGE::QAcct::Job.should be_const_defined(:FIELDS)
@@ -8,20 +43,11 @@ describe SGE::QAcct::Job do
     end
 
     it "should define accessor for each fields" do
-      SGE::QAcct::Job::FIELDS.each do |f|
+      klass::FIELDS.each do |f|
         subject.should respond_to(f)
         subject.should respond_to("#{f}=")
       end
     end
-
   end
 
-  it "should load documents" do
-    pending "This is critical and must be implemented"
-  end
-
-  it "should execute" do
-    Kernel.should_receive("`").once.with("ls").and_return "A list of files"
-    subject.class.execute('ls').should == "A list of files"
-  end
 end
