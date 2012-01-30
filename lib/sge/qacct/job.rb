@@ -12,7 +12,7 @@ module SGE
         end
       end
 
-      def self.load_documents(opts,&block)
+      def self.load_documents(opts)
         documents = []
         transformer = SGE::QAcct::Transformer.new
 
@@ -30,7 +30,9 @@ module SGE
 
         # Load documents
         if block_given?
-          transformer.load_from_yaml_file(fifo, opts[:remove_tmp_file], &block)
+          transformer.load_from_yaml_file(fifo, opts[:remove_tmp_file]) do |doc|
+            documents << yield(doc)
+          end
         else
           transformer.load_from_yaml_file(fifo, opts[:remove_tmp_file]) do |doc|
             documents << doc
