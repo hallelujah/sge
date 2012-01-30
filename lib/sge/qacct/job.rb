@@ -15,19 +15,19 @@ module SGE
       def self.load_documents(opts,&block)
         documents = []
         transformer = SGE::QAcct::Transformer.new
-        
+
         # Compute command
         cmd = command(opts)
-        
+
         # Make a fifo to dump
         fifo = opts[:file] || SGE::Utils.mkfifo(opts[:tmp_dir])
-        
+
         # Add transformer to yaml command
         cmd = transformer.command(opts.merge(:cmd => cmd, :file => fifo))
-        
+
         # Execute this command
-        execute(cmd)
-        
+        SGE::Utils.execute(cmd)
+
         # Load documents
         if block_given?
           transformer.load_from_yaml_file(fifo, opts[:remove_tmp_file], &block)
@@ -42,11 +42,6 @@ module SGE
       def self.command(opts)
        return opts[:cmd] if opts[:cmd]
        raise "Not Implemented Yet"
-      end
-
-      def self.execute(cmd)
-        # The same as `#{cmd}`
-        Kernel.system(cmd)
       end
 
     end

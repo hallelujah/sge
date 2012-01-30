@@ -12,6 +12,12 @@ describe SGE::Utils do
       File.stat(file).should be_pipe
       File.unlink file
     end
+
+    it "should execute" do
+      Kernel.should_receive("system").once.with("ls").and_return "A list of files"
+      SGE::Utils.execute('ls').should == "A list of files"
+    end
+
   end
 
 end

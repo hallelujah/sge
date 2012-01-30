@@ -8,5 +8,10 @@ module SGE
       tmp_pipe
     end
 
+    def self.execute(cmd)
+      # The same as `#{cmd}`
+      Kernel.system(cmd)
+    end
+
   end
 end
