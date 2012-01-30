@@ -37,8 +37,8 @@ module SGE
           transformer.load_from_yaml_file(fifo, opts[:remove_tmp_file]) do |doc|
             documents << doc
           end
-          documents
         end
+        documents
       end
 
       def self.command(opts)
