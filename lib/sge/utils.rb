@@ -8,9 +8,16 @@ module SGE
       tmp_pipe
     end
 
-    def self.execute(cmd)
+    def execute(cmd)
       # The same as `#{cmd}`
       Kernel.system(cmd)
+    end
+
+    def read_file(filename, remove_file = false)
+      File.open(filename,"r") do |file|
+        yield(file)
+      end
+      File.unlink(filename) if remove_file
     end
 
   end

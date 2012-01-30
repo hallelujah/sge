@@ -18,6 +18,10 @@ describe SGE::Utils do
       SGE::Utils.execute('ls').should == "A list of files"
     end
 
+    it "should read file" do
+      SGE::Utils.should respond_to(:read_file)
+    end
+
   end
 
 end
