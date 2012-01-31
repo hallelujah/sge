@@ -31,7 +31,7 @@ describe SGE::QStat::Job do
     lambda{ @job = SGE::QStat::Job.from_document(doc) }.should_not raise_error
     @job.job_number.should == '2337'
     @job.name.should == 's20100220_11;init_jour'
-    @job.state.should == 'r'
+    @job.state.should == ['r','running']
     @job.owner.should == 'prodsoft'
     @job.start_time.should == '2010-02-24T21:55:13'
     @job.queue_name.should == 'calcul-x@wousdat-dev.in.weborama.fr'

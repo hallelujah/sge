@@ -8,9 +8,9 @@ module SGE
         :JB_owner => :owner,
         :JAT_start_time => :start_time,
         :queue_name => :queue_name,
-        :JB_submission_time => :submission_time,
-        :state => :state
+        :JB_submission_time => :submission_time
       )
+      special_attribute :state, "@state|state"
 
       def self.load_documents(opts,&block)
         documents = []
