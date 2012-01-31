@@ -19,23 +19,18 @@ describe SGE::QAcct::Job do
         docs = klass.load_documents(:cmd  => "cat #{file}", :remove_tmp_file => true)
         docs.should_not be_empty
       end
-      
+
       it "should receive a block" do
         doc = nil
         klass.load_documents(:cmd  => "cat #{file}", :remove_tmp_file => true) do |d|
-          doc = d 
+          doc = d
           break
         end
         doc.should be_an_instance_of(klass)
       end
     end
 
-    it "should execute" do
-      Kernel.should_receive("system").once.with("ls").and_return "A list of files"
-      klass.execute('ls').should == "A list of files"
-    end
   end
-
   context "FIELDS" do
     it "should define constant FIELD" do
       SGE::QAcct::Job.should be_const_defined(:FIELDS)

@@ -5,10 +5,9 @@ module SGE
 
       def load_from_yaml_file(yaml_file, remove_file = false,&block)
         raise "A block must be given" unless block_given?
-        File.open(yaml_file,"r") do |file|
+        SGE::Utils.read_file(yaml_file,remove_file) do |file|
           YAML.load_documents(file,&block)
         end
-        File.unlink(yaml_file) if remove_file
       end
 
       def transformer_file

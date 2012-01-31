@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SGE::QStat::Parser do
-  JOBS_FILE = 'spec/data/jobs.sge'
+  JOBS_FILE = 'spec/data/qstat.sge'
 
   it "should inherit from Nokogiri::XML::Document" do
     SGE::QStat::Parser.should < Nokogiri::XML::Document
