@@ -44,7 +44,8 @@ module SGE
 
       def self.command(opts)
         if opts[:cmd]
-          opts[:cmd]
+          stat = File.stat(opts[:fifo])
+          [opts[:cmd],">", opts[:fifo], stat.pipe? ? "&" : nil].join(' ')
         else
           file = opts[:sample] || File.expand_path('../../../../spec/data/qstat.sge',__FILE__)
           "cat #{file} > #{opts[:fifo]} &"
